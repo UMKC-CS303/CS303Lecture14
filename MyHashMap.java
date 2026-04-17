@@ -77,8 +77,9 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
   //PRE:  accepts a value
   //POST: returns true if the specified value is in the map  
   public boolean containsValue(V value) {
-     System.out.println("TASK 1: containsValue Needs Completion");
-    
+     for (K key: keySet()) {
+      if (get(key).equals(value)) return true;
+     };
      return false;
   }
   
@@ -150,7 +151,13 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
   //      if found, removes item using remove function (from linked list)
 
   public void remove(K key) {
-    System.out.println("TASK 2: Remove Needs Completion");
+    for (int i = 0; i < capacity; i++) {
+      if (table[i] != null) {
+        MyLinkedList<Entry<K, V>> bucket = table[i]; 
+        for (Entry<K, V> entry: bucket)
+          if (entry.key.equals(key)) bucket.remove(entry);
+      }
+    }
   }
   
   
@@ -168,7 +175,31 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
   //      update size
   //      return value
   public V put(K key, V value) {
-    System.out.println("TASK 3: Put Needs Completion");
+    if (get(key) != null) {
+      int bucketIndex = hash(key.hashCode());
+      MyLinkedList<Entry<K,V>> bucket = table[bucketIndex];
+      for(Entry<K,V> entry: bucket) {
+        if(entry.getKey().equals(key)) {
+          V oldEntry = entry.getValue();
+          entry.value = value;
+          return oldEntry;
+        }
+      }
+    }
+
+    if (size >= (capacity * loadFactorThreshold)) {
+      if (capacity == MAXIMUM_CAPACITY)
+        throw new RuntimeException("No more room in the inn");
+      rehash();
+    }
+
+    int bucketIndex = hash(key.hashCode());
+    if (table[bucketIndex] == null) {
+      table[bucketIndex] = new MyLinkedList<Entry<K,V>>();
+    }
+
+    table[bucketIndex].add(new MyMap.Entry<K,V>(key, value));
+    size++;
     
     return value;  
   } 
@@ -229,9 +260,12 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     
     //get entries & double capacity
     java.util.Set<Entry<K, V>> set = entrySet(); // Get entries
-    capacity <<= 1; // Double capacity    
-
-    System.out.println("TASK 4: Rehash Needs Completion");
+    capacity <<= 1; // Double capacity
+    table = new MyLinkedList[capacity];
+    size = 0;
+    for (Entry<K,V> entry: set) {
+      put(entry.getKey(), entry.getValue());
+    }
   }
 
   //TASK 5: VALUES
@@ -239,9 +273,15 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
   //PRE:  none
   //POST: Return a set consisting of the values in this map
   public java.util.Set<V> values() {
-    java.util.Set<V> set = new java.util.HashSet<>();
+    java.util.Set<V> set = new java.util.HashSet<V>();
     
-    System.out.println("TASK 5: Values Needs Completion");
+    for (int i = 0; i < capacity; i++) {
+      if (table[i] != null) {
+        MyLinkedList<Entry<K, V>> bucket = table[i]; 
+        for (Entry<K, V> entry: bucket)
+          set.add(entry.getValue()); 
+      }
+    }
     
     return set;
   }  
