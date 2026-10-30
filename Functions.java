@@ -20,6 +20,7 @@ public class Functions {
         System.out.println("Entries in map:       " + map);
         System.out.println("Size of map:          " + map.size());
 
+        System.out.println("\n\nTESTING MYMAP: Task 1 PUT & Task 3 REHASH");  
         map.put("Smith", 30);
         map.put("Anderson", 31);
         map.put("Lewis", 29);
@@ -38,13 +39,20 @@ public class Functions {
         System.out.println("Is age 33 in the map? " + map.containsValue(33));
         System.out.println("Is age 65 in the map? " + map.containsValue(65));
 
-
-        System.out.println("Removing George (15) & Anderson(31)");
+        System.out.println("\n\nTESTING MYMAP: Task 2 REMOVE");  
+        System.out.println("Removing Anderson(31) & George (15) ");
         map.remove("Anderson");
+        map.remove("15");
         System.out.println("Entries in map:       " + map);
         System.out.println("Keys in map:          " + map.keySet());
+
+        System.out.println("\n\nTESTING MYMAP: Task 4 Values");  
         System.out.println("Values in map:        " + map.values());
-   
+
+        System.out.println("\n\nTESTING MYMAP: Task 5 Contains Values");  
+        System.out.println("Values in map:        " + map.containsValue(15));
+        System.out.println("Values in map:        " + map.containsValue(31 ));
+
         map.clear();
         System.out.println("Entries in map:       " + map);
     }

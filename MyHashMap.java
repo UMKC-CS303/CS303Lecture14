@@ -1,8 +1,11 @@
+
+import javax.management.RuntimeErrorException;
+
 public class MyHashMap<K, V> implements MyMap<K, V> {
   // MYHASHMAP ATTRIBUTES
   
   // Define the default hash table size. Must be a power of 2
-  private static int DEFAULT_INITIAL_CAPACITY = 4;
+  private static int DEFAULT_INITIAL_CAPACITY = 2;
   
   // Define the maximum hash table size. 1 << 30 is same as 2^30
   private static int MAXIMUM_CAPACITY = 1 << 30; 
@@ -72,12 +75,12 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
       return false;
   }
   
-  //TASK 1: CONTAINSVALUE
+  //TASK 5: CONTAINSVALUE
   @Override  
   //PRE:  accepts a value
   //POST: returns true if the specified value is in the map  
   public boolean containsValue(V value) {
-     System.out.println("TASK 1: containsValue Needs Completion");
+     System.out.println("TASK 5: containsValue Needs Completion");
     
      return false;
   }
@@ -154,7 +157,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
   }
   
   
-  //TASK 3: PUT
+  //TASK 1: PUT
   @Override /** Add an entry (key, value) into the map */
   //PRE:  accepts a key & value
   //POST: determines if key exists in the table
@@ -168,7 +171,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
   //      update size
   //      return value
   public V put(K key, V value) {
-    System.out.println("TASK 3: Put Needs Completion");
+    System.out.println("TASK 1: Put Needs Completion");
     
     return value;  
   } 
@@ -183,6 +186,9 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
   }
 
 
+
+
+  
   /** Hash function */  
   //PRE:  accepts a given hashCode
   //POST: Returns the table index of the value provided
@@ -219,29 +225,33 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     }
   }
   
-  //TASK 4: Rehash the map 
+  //TASK 3: Rehash the map 
   //PRE:  none
   //POST: it is determined the table needs to be resized
   //      the table is copied into a set
   //      the table is cleared & resized
   //      items from the set are ‘put’ into the new table
   private void rehash() {
+    //System.out.println("TASK 3: Rehash Needs Completion");
     
     //get entries & double capacity
     java.util.Set<Entry<K, V>> set = entrySet(); // Get entries
-    capacity <<= 1; // Double capacity    
-
-    System.out.println("TASK 4: Rehash Needs Completion");
+    capacity <<= 1; // Double capacity  
+    table = new MyLinkedList[capacity]; 
+    size = 0; 
+    for (Entry<K,V> entry : set){
+        put(entry.getKey(), entry.getValue());
+    }
   }
 
-  //TASK 5: VALUES
+  //TASK 4: VALUES
   @Override  
   //PRE:  none
   //POST: Return a set consisting of the values in this map
   public java.util.Set<V> values() {
     java.util.Set<V> set = new java.util.HashSet<>();
     
-    System.out.println("TASK 5: Values Needs Completion");
+    System.out.println("TASK 4: Values Needs Completion");
     
     return set;
   }  
